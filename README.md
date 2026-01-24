@@ -17,3 +17,6 @@ info()
 isnull().sum()
 
 dropna()
+
+i shall change the dataset
+banking77 dataset
