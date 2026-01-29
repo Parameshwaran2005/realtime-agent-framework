@@ -20,3 +20,5 @@ dropna()
 
 i shall change the dataset
 banking77 dataset
+used tfidf vectorizer
+now building chatbot ui
