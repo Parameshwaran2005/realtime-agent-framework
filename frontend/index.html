@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Banking Intent Classifier</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 600px; margin: 60px auto; padding: 0 20px; background: #0f172a; color: #e2e8f0; }
+  h1 { font-size: 1.4rem; }
+  input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #1e293b; color: #e2e8f0; font-size: 1rem; box-sizing: border-box; }
+  button { margin-top: 12px; padding: 12px 20px; border-radius: 8px; border: none; background: #3b82f6; color: white; font-size: 1rem; cursor: pointer; }
+  button:hover { background: #2563eb; }
+  #result { margin-top: 20px; padding: 16px; border-radius: 8px; background: #1e293b; display: none; }
+  .intent { font-size: 1.1rem; font-weight: 600; color: #60a5fa; }
+  .confidence { color: #94a3b8; font-size: 0.9rem; }
+</style>
+</head>
+<body>
+  <h1>🏦 Banking Query Intent Classifier</h1>
+  <p style="color:#94a3b8">Type a banking-related question — the model predicts the intent in real time.</p>
+  <input id="queryInput" type="text" placeholder="e.g. I lost my card, what should I do?" />
+  <button onclick="predict()">Predict Intent</button>
+  <div id="result">
+    <div class="intent" id="intentText"></div>
+    <div class="confidence" id="confText"></div>
+  </div>
+
+<script>
+// Replace this with YOUR Render URL once deployed
+const API_URL = "https://realtime-agent-framework.onrender.com/predict";
+
+async function predict() {
+  const text = document.getElementById("queryInput").value;
+  if (!text) return;
+
+  const resultDiv = document.getElementById("result");
+  resultDiv.style.display = "block";
+  document.getElementById("intentText").innerText = "Predicting...";
+  document.getElementById("confText").innerText = "";
+
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text })
+    });
+    const data = await response.json();
+    document.getElementById("intentText").innerText = data.predicted_intent;
+    document.getElementById("confText").innerText = `Confidence: ${(data.confidence * 100).toFixed(1)}%`;
+  } catch (err) {
+    document.getElementById("intentText").innerText = "Error reaching API";
+    document.getElementById("confText").innerText = err.message;
+  }
+}
+
+document.getElementById("queryInput").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") predict();
+});
+</script>
+</body>
+</html>
