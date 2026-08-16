@@ -1,24 +1,53 @@
-# realtime-agent-framework
+# Banking Intent Classifier API
 
-## This project will consist of a chatbot
+A 77-class intent classifier for real-time banking query routing, built on the Banking77 dataset. Uses TF-IDF vectorization + Logistic Regression, deployed as a FastAPI REST API.
 
-## "Training from scratch" is now research; "Architecting a system" is engineering
+## Setup
+pip install -r requirements.txt
 
-Load dataset
+## Run
+uvicorn app:app --reload
 
-Run:
+## Usage
+POST /predict
+{
+  "text": "I lost my card, what should I do?"
+}
 
-head()
+Response:
+{
+  "query": "I lost my card, what should I do?",
+  "predicted_intent": "lost_or_stolen_card",
+  "confidence": 0.87
+}
 
-shape
+## Model
+- Vectorizer: TF-IDF (unigrams + bigrams, 5000 max features)
+- Classifier: Logistic Regression
+- Dataset: Banking77 (77 intents, ~10k training queries)# Banking Intent Classifier API
 
-info()
+A 77-class intent classifier for real-time banking query routing, built on the Banking77 dataset. Uses TF-IDF vectorization + Logistic Regression, deployed as a FastAPI REST API.
 
-isnull().sum()
+## Setup
+pip install -r requirements.txt
 
-dropna()
+## Run
+uvicorn app:app --reload
 
-i shall change the dataset
-banking77 dataset
-used tfidf vectorizer
-now building chatbot ui
+## Usage
+POST /predict
+{
+  "text": "I lost my card, what should I do?"
+}
+
+Response:
+{
+  "query": "I lost my card, what should I do?",
+  "predicted_intent": "lost_or_stolen_card",
+  "confidence": 0.87
+}
+
+## Model
+- Vectorizer: TF-IDF (unigrams + bigrams, 5000 max features)
+- Classifier: Logistic Regression
+- Dataset: Banking77 (77 intents, ~10k training queries)
